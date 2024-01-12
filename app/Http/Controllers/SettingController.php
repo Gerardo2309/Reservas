@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Type_TourController extends Controller
+class SettingController extends Controller
 {
     public function __construct()
     {
@@ -12,7 +13,12 @@ class Type_TourController extends Controller
     }
 
 
-    public function index(){
+    public function type_tour(){
         return view('admin.tours.type_tours.index');
+
+    }
+
+    public function additionals(){
+        return view('admin.additionals.index');
     }
 }

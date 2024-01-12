@@ -1,6 +1,9 @@
 <div>
-    <div class="pb-10 overflow-x-auto relative shadow-md mx-auto">
+    <div class="relative mx-auto">
         <div class="px-4 sm:px-6 xl:px-36 p-5 flex justify-between items-center pb-4 bg-white dark:bg-gray-900">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('Tours') }}
+            </h2>
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
                 <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">

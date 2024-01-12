@@ -34,7 +34,9 @@
     <x-banner />
 
     <div class="min-h-screen bg-gray-100 dark:bg-gray-800">
-        @livewire('navigation-menu')
+        @if (auth()->user()->hasRole('Admin'))
+            @livewire('navigation-menu')
+        @endif
 
         <!-- Page Heading -->
         @if (isset($header))
@@ -48,6 +50,10 @@
         <!-- Page Content -->
         <main>
             {{ $slot }}
+            <div class="pt-10 lg:hidden">
+                <x-nav-movile />
+            </div>
+
         </main>
     </div>
 
