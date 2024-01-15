@@ -11,14 +11,14 @@
                             clip-rule="evenodd"></path>
                     </svg>
                 </div>
-                <input wire:model="search" type="text" id="table-search-type-tours"
+                <input wire:model="search" type="text" id="table-search-additionals"
                     class="block p-2 pl-10 w-80 text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Search for Type Tours">
+                    placeholder="Search for Additionals">
             </div>
-
             <div>
+            {{-- cambiar el can  --}}
                 @can('admin.type-tours.create')
-                    @livewire('admin.tours.type-tours.type-tours-create')
+                    @livewire('admin.additionals.additionals-create')
                 @endcan
             </div>
         </div>
@@ -53,7 +53,7 @@
                             </td>
                             <td class="py-4 px-6 text-right">
                                 @can('admin.type-tours.edit')
-                                    @livewire('admin.tours.type-tours.type-tours-edit', ['additional' => $additional], key($additional->id))
+                                    @livewire('admin.additionals.additionals-edit', ['additional' => $additional], key($additional->id))
                                 @endcan
                             </td>
                         </tr>
