@@ -6,6 +6,13 @@
     </x-slot>
 
     <div>
+        <div class="w-full flex justify-center py-4">
+            {{QrCode::size(200)
+                ->margin(1)->generate(
+                'https://caribbean.shoppingmallcancun.com/',
+            );}}
+        </div>
+
         <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
             @if (Laravel\Fortify\Features::canUpdateProfileInformation())
                 @livewire('profile.update-profile-information-form')

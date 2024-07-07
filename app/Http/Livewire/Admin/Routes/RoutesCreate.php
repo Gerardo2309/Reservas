@@ -14,53 +14,24 @@ class RoutesCreate extends Component
 {
     use WithFileUploads;
     public $open = false;
-    public $name,  $slug, $description, $file = [];
+    public $name, $short_descrip,$icon;
     protected $rules = [
         'name' => 'required',
-        'description' => 'required',
-        'file' => 'required',
+        'short_descrip' => 'required',
+        'icon' => 'required',
     ];
-
-
-    public function removeMe($index)
-    {
-            array_splice($this->file, $index, 1);
-    }
 
    public function create()
     {
         $this->validate();
 
-        //$this->slug = Str::slug($this->name);
-
-        $route = Route::create([
+        Route::create([
             'name' => $this->name,
-           // 'slug' => $this->slug,
-            'description' => $this->description,
+            'short_descrip' => $this->short_descrip,
+            'icon' => $this->icon,
         ]);
-        if ($route->id != null) {
-            foreach ($this->file as $image) {
-                $fileName = $this->name . '-' . substr(uniqid(rand(), true), 8, 8) . '.' . $image->getClientOriginalExtension();
-                $idmiage = ModelsImage::create([
-                    'url' => 'storage/photos/' . $fileName,
-                    'imageable_id' => $route->id,
-                    'imageable_type' => 'App\Models\Route',
-                ]);
-                if ($idmiage != null) {
-                    $img = Image::make($image->getRealPath())->encode('jpg', 65)->fit(760, null, function ($c) {
-                        $c->aspectRatio();
-                        $c->upsize();
-                    });
-                    $img->stream(); // <-- Key point
-                    $ruta = Storage::disk('local')->put('public/photos' . '/' . $fileName, $img, 'public');
-                }
-            }
-        }
-
-
-
         $this->emit('render');
-        $this->reset('open', 'name', 'slug',  'description','file');
+        $this->reset('open', 'name', 'short_descrip', 'icon');
         $this->emit('swal:alert', [
             'icon'    => 'success',
             'message'   => 'The Route was successfully added!!',

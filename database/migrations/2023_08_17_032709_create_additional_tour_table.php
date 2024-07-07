@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('additional_id');
             $table->unsignedBigInteger('tour_id');
-            $table->boolean('status');
             $table->foreign('additional_id')->references('id')->on('additionals')->onDelete('cascade');
             $table->foreign('tour_id')->references('id')->on('tours')->onDelete('cascade');
             $table->timestamps();

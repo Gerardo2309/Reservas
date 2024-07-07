@@ -12,16 +12,8 @@ class Route extends Model
     protected $fillable = [
         'name',
         //'slug', 
-        'description',
+        'short_descrip',
+        'icon',
     ];
-    use HasFactory;
-
-    public function image(): MorphOne
-    {
-        return $this->morphOne(Image::class, 'imageable');
-    }
-    public function imagenes(): MorphMany
-    {
-        return $this->morphMany(Image::class, 'imageable');
-    }
+    use HasFactory; 
 }

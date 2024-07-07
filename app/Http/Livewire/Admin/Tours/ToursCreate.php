@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin\Tours;
 
 use App\Models\Image as ModelsImage;
+use App\Models\Route;
 use App\Models\Tipo_tour;
 use App\Models\Tour;
 use Illuminate\Support\Facades\Storage;
@@ -16,12 +17,16 @@ class ToursCreate extends Component
 {
     use WithFileUploads;
     public $open = false;
-    public $ttours;
-    public $name,  $slug, $description, $tipo_tour_id, $file = [];
+    public $ttours,$rtours;
+    public $name,  $slug, $price, $short_descrip, $description ,$maps, $tipo_tour_id, $route_tour_id=[], $file = [];
     protected $rules = [
         'name' => 'required',
+        'price' => 'required',
+        'short_descrip' => 'required',
         'description' => 'required',
+        'maps' => 'required',
         'tipo_tour_id' => 'required',
+        'route_tour_id' => 'required',
         'file' => 'required',
     ];
 
@@ -34,6 +39,7 @@ class ToursCreate extends Component
     public function mount()
     {
         $this->ttours = Tipo_tour::pluck("name", "id");
+        $this->rtours = Route::pluck("name", "id");
     }
 
     public function create()
@@ -45,7 +51,10 @@ class ToursCreate extends Component
         $tour = Tour::create([
             'name' => $this->name,
             'slug' => $this->slug,
+            'price' => $this->price,
+            'short_descrip' => $this->short_descrip,
             'description' => $this->description,
+            'maps' => $this->maps,
             'tipo_tour_id' => $this->tipo_tour_id,
         ]);
         if ($tour->id != null) {
@@ -57,7 +66,7 @@ class ToursCreate extends Component
                     'imageable_type' => 'App\Models\Tour',
                 ]);
                 if ($idmiage != null) {
-                    $img = Image::make($image->getRealPath())->encode('jpg', 65)->fit(760, null, function ($c) {
+                    $img = Image::make($image->getRealPath())->orientate()->encode('jpg', 65)->fit(760, null, function ($c) {
                         $c->aspectRatio();
                         $c->upsize();
                     });
@@ -70,7 +79,7 @@ class ToursCreate extends Component
 
 
         $this->emit('render');
-        $this->reset('open', 'name', 'slug',  'description', 'tipo_tour_id','file',);
+        $this->reset('open', 'name', 'slug', 'short_descrip', 'description', 'tipo_tour_id','file',);
         $this->emit('swal:alert', [
             'icon'    => 'success',
             'message'   => 'The Tour was successfully added!!',

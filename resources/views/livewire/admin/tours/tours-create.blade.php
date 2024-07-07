@@ -20,9 +20,30 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                     </div>
                     <div>
+                        <label for="price"
+                            class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tour
+                            price</label>
+                        <textarea wire:model.defer="price" type="text" id="price"
+                            rows="2"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="short_descrip"
+                            class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Short
+                            Description</label>
+                        <textarea wire:model.defer="short_descrip" type="text" id="short_descrip"
+                            rows="2"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                    </div>
+                    <div>
                         <label for="description"
                             class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Description</label>
                         <textarea wire:model.defer="description" type="text" id="description"
+                            rows="5"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                    </div>
+                    <div>
+                        <label for="maps"
+                            class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"> Link of
+                            maps</label>
+                        <textarea wire:model.defer="maps" type="text" id="maps"
                             rows="5"class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
                     </div>
                     <div class="group">
@@ -31,7 +52,6 @@
                             Tour</label>
                         <select wire:model="tipo_tour_id" id="tipo_tour_id"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 {{ $errors->has('tipo_tour_id') ? ' is-invalid' : null }}">
-                            <option value="">{{ __('Selecciona un usuario') }}</option>
                             @if (count($ttours) > 0)
                                 @foreach ($ttours as $id => $name)
                                     <option value="{{ $id }}">{{ $name }}</option>
@@ -40,6 +60,24 @@
                         </select>
                         @error('tipo_tour_id')
                             <div class="invalid-feedback">{{ $errors->first('tipo_tour_id') }}</div>
+                        @enderror
+
+                    </div>
+                    <div class="group">
+                        <label for="route_tour_id"
+                            class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Route of
+                            Tour</label>
+                        <select wire:model="route_tour_id"  id="tags" multiple="multiple" style="width: 100%"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 {{ $errors->has('route_tour_id') ? ' is-invalid' : null }}">
+                            <option value="">{{ __('Selecciona un usuario') }}</option>
+                            @if (count($rtours) > 0)
+                                @foreach ($rtours as $id => $name)
+                                    <option value="{{ $id }}">{{ $name }}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('route_tour_id')
+                            <div class="invalid-feedback">{{ $errors->first('route_tour_id') }}</div>
                         @enderror
 
                     </div>
@@ -146,5 +184,13 @@
 
     </x-dialog-modal>
 
+    <script>
+        var values = $('#tags option[selected="true"]').map(function() {
+            return $(this).val();
+        }).get();
 
+        // you have no need of .trigger("change") if you dont want to trigger an event
+        $('#tags').select2();
+        
+    </script>
 </div>

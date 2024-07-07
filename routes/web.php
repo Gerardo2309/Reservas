@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AgencyController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\PaxController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\SettingController;
@@ -22,7 +23,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('auth.login');// regresar a welcome cuando hagaran reservas
+    return view('auth.login'); // regresar a welcome cuando hagaran reservas
 });
 
 Route::middleware([
@@ -31,25 +32,32 @@ Route::middleware([
     'verified'
 ])->group(function () {
     Route::get('/dashboard', function () {
-        if(auth()->user()->HasRole('Admin')){
+       // if (auth()->user()->hasRole('Admin')) {
             return view('dashboards.dashboard-admin');
-
-        }else if (auth()->user()->hasRole('Rep')) {
+        /*} else if (auth()->user()->hasRole('Rep')) {
             return view('dashboards.dashboard-rep');
-        }
-  
+        }*/
     })->name('dashboard');
 
-    Route::get('/hotels/{id}',[HotelController::class, 'show'])->name('hotels.show');
-    Route::get('/hotels',[HotelController::class, 'index'])->name('hotels.index');
-    Route::get('/agencies',[AgencyController::class, 'index'])->name('agencies.index');
-    Route::get('/type-tours',[SettingController::class, 'type_tour'])->name('type-tours.index');
-    Route::get('/additionals',[SettingController::class, 'additionals'])->name('additionals.index');
-    Route::get('/tours',[TourController::class, 'index'])->name('tours.index');
-    Route::get('/routes',[RouteController::class, 'index'])->name('routes.index');
-    Route::get('tours/{tour:slug}',[TourController::class, 'show'])->name('tours.show');
-    Route::get('/Users',[UserController::class, 'index'])->name('users.index');
-    Route::get('/paxes',[PaxController::class, 'index'])->name('paxes.index');
+    Route::get('/hotels/{id}', [HotelController::class, 'show'])->name('hotels.show');
+    Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 
+    Route::get('/agencies', [AgencyController::class, 'index'])->name('agencies.index');
 
+    Route::get('/type-tours', [SettingController::class, 'type_tour'])->name('type-tours.index');
+
+    Route::get('/additionals', [SettingController::class, 'additionals'])->name('additionals.index');
+
+    Route::get('/tours', [TourController::class, 'index'])->name('tours.index');
+    Route::get('tours/newtour', [TourController::class, 'create'])->name('tours.create');
+    Route::post('tours/newtour', [TourController::class, 'store']);
+    Route::get('tours/{tour:slug}', [TourController::class, 'show'])->name('tours.show');
+
+    Route::get('/routes', [RouteController::class, 'index'])->name('routes.index');
+
+    Route::get('/Users', [UserController::class, 'index'])->name('users.index');
+
+    //Route::get('/paxes', [PaxController::class, 'index'])->name('paxes.index');
+    //Ruta para procesar la imagenes en el controlador
+    Route::post('/images', [ImageController::class, 'store'])->name('images.store');
 });

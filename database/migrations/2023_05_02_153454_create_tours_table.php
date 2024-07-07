@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('slug',100);
+            $table->float('price');
+            $table->string('duration');
+            $table->text('short_descrip');            
             $table->text('description');            
+            $table->text('maps');            
             $table->unsignedBigInteger('tipo_tour_id')->nullable();
             $table->foreign('tipo_tour_id')->references('id')->on('tipo_tours')->onDelete('set null');
             $table->timestamps();

@@ -14,8 +14,13 @@ class Tour extends Model
     protected $fillable = [
         'name',
         'slug', 
+        'price',
+        'duration',
+        'short_descrip',
         'description',
+        'maps',
         'tipo_tour_id',
+        'images',
     ];
 
 
@@ -47,11 +52,7 @@ class Tour extends Model
 
     public function additionals(): BelongsToMany
     {
-        return $this->belongsToMany(Additional::class, 'additional_tour')->wherePivot('status', 1);
-    }
-    public function noadditionals(): BelongsToMany
-    {
-        return $this->belongsToMany(Additional::class, 'additional_tour')->wherePivot('status', 0);
+        return $this->belongsToMany(Additional::class, 'additional_tour');
     }
 
     public function routes(): BelongsToMany
